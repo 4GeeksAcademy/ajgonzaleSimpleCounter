@@ -1,41 +1,47 @@
 import React, { useState, useEffect  } from 'react';
 
-function SecondsCounter(prop) {
-  const [seconds, setSeconds] = useState(prop.seconds);
+const SecondsCounter = (prop) => {
+  const [seconds, setSeconds] = useState(0);
   const [secondsLabel, setSecondsLabel] = useState('000000');
   const [inputValue,setInputValue] = useState(null);
-  let interval = '';
+  let interval = null;
   let numero = 0;
   const [upOrDown, setUpOrDown] = useState(true);
-
+  
   useEffect(() => {
     interval = setInterval(count, 1000);
       return () => clearInterval(interval);
   }, [seconds]);
 
- let count = () => {
-    upOrDown ? numero = Number(seconds) + 1 : numero = Number(seconds) - 1;
-    if (numero == -1) {
+  let count = () => {
+    //upOrDown ? numero = Number(seconds) + 1 : numero = Number(seconds) - 1;
+    if (seconds == 0 && !upOrDown) {
       clearInterval(interval);
       var myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {});      
       myModal.show();
     } else {
-      setSeconds(numero);
-      setSecondsLabel(String(numero).padStart(6, '0'));
-    }    
+      setSeconds((currentSeconds) => {return upOrDownFunc(currentSeconds)});
+    }   
+    setSecondsLabel(String(seconds).padStart(6, '0')); 
+  }
+
+  function upOrDownFunc(currentSeconds) {
+    upOrDown ? numero = Number(currentSeconds) + 1 : numero = Number(currentSeconds) - 1; 
+    return numero;
   }
 
   function reset() {   
     setUpOrDown(true); 
-    setSeconds(Number(0.0));
+    setSeconds(Number(0.0) + ' ');
   }
 
   function stop() {
+    console.log(interval);
     clearInterval(interval);       
   }
 
   function resume() {
-    setSeconds(seconds + ' ');
+    seconds == 0 ? setSeconds(1) : setSeconds(seconds + ' ');
   }
 
   function countdown() {    
@@ -72,6 +78,6 @@ function SecondsCounter(prop) {
             </div>
           </div>
         </form>;
-}
+};
 
 export default SecondsCounter;
