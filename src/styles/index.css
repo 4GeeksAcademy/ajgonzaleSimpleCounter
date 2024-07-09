@@ -9,4 +9,13 @@
     
     import 'relative/path/to/stylesheet.scss';
 
+    
 */
+
+body {
+    font-family: orbitron;
+    font-size: 100px;
+    text-align: center;
+    background-color: black;
+    color: white;
+}

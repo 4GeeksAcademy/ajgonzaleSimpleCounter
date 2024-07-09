@@ -10,5 +10,5 @@ import SecondsCounter from "./component/secondsCounter.jsx";
 
 //render your react application
 const root = ReactDOM.createRoot(document.getElementById('app'));
-root.render(<SecondsCounter />);
+root.render(<SecondsCounter seconds={0} />);
 
